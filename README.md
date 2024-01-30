@@ -12,7 +12,7 @@ emoji for "Unicorn face" being selected](screenshots/1_main.png)
 
 ## Usage
 
-Run rofi like:
+Run Rofi like:
 
 ```bash
 rofi -modi emoji -show emoji
@@ -193,16 +193,37 @@ pacman -S rofi-emoji
 xbps-install -S rofi-emoji
 ```
 
-### NixOS
+### NixOS or Home Manager
 
-```bash
-nix-env -e rofi-emoji
+If you are using `home-manager` you should set up this as a plugin to your Rofi install:
+
+```nix
+programs.rofi = {
+  enable = true;
+  plugins = [pkgs.rofi-emoji];
+  # ...
+}
+```
+
+If you are using plain NixOS, then you might need to set up your own plugin
+path to the command.
+
+```nix
+environment.systemPackages = [
+    # ...
+    (
+        pkgs.rofi.override (old: {
+            plugins = old.plugins ++ [pkgs.rofi-emoji];
+        })
+    )
+    # ...
+];
 ```
 
 ### Compile from source
 
-`rofi-emoji` uses autotools as build system. On Debian/Ubuntu based systems you
-will need to install the packages first:
+`rofi-emoji` uses autotools as its build system. On Debian/Ubuntu based systems
+you will need to install the packages first:
 
 - `rofi-dev`
 - `autoconf`
@@ -225,6 +246,10 @@ If you plan on developing the code and want to test the plugin, you can also
 run `./run-development.sh`, which will do all setup steps for you and then
 start Rofi using the locally compiled plugin and clipboard adapter script. This
 will not affect your system and does not require root.
+
+> [!Note]
+> Don't forget to also install the appropriate [optional
+> dependencies](#optional-dependencies) in order for the plugin to work.
 
 ### Running tests
 
