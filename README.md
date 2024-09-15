@@ -4,12 +4,8 @@ An emoji selector plugin for Rofi that copies the selected emoji to the
 clipboard, among other things.
 
 > [!Note]
-> The [`master` branch][master-branch] of this repo tracks Rofi `next`. If you
-> use a stable release of Rofi, then you should use the latest stable release
-> of this package as well.
->
-> See the [`3-x-stable` branch][stable-branch] for documentation of the latest
-> stable release.
+> See the [`3-x-stable` branch][stable-branch] for documentation of 3.x branch,
+> which is the version that is meant for Rofi 1.7.x.
 
 ## Screenshots
 
@@ -86,15 +82,17 @@ The plugin adds the following command line arguments to `rofi`:
 
 #### Mode
 
-The plugin supports four modes:
+The plugin supports five modes:
 
 1. `insert` (default) - Copies the selected emoji, and then tries to insert it
    directly in the focused window.
 2. `copy` - Only copies the selected emoji to your clipboard without trying to
    insert anything.
-3. `menu` - Open the menu. Useful if you prefer to always get options when just
+3. `insert_no_copy` - Tries to insert the emoji in the focused window, but
+   without copying anything.
+4. `menu` - Open the menu. Useful if you prefer to always get options when just
    pressing <kbd>Enter</kbd>.
-4. `stdout` - Write selected emoji to standard output. This is useful if you
+5. `stdout` - Write selected emoji to standard output. This is useful if you
    want to use the emoji selector inside of a shell pipeline, like Rofi's
    `-dmenu` mode. It will use the `-format` argument to customize the outputted
    text, just like `-dmenu`.
@@ -155,10 +153,10 @@ rofi -modi emoji -show emoji -emoji-format '{emoji}'
 
 ## Dependencies
 
-|        rofi-emoji version | Rofi version |
-| ------------------------: | -----------: |
-|      [3.x][stable-branch] |        1.7.5 |
-| [`master`][master-branch] |       `next` |
+|   rofi-emoji version |   Rofi version |
+| -------------------: | -------------: |
+| [3.x][stable-branch] |          1.7.5 |
+| [4.x][master-branch] | `next` / 1.8.x |
 
 ### Optional dependencies
 
@@ -191,7 +189,8 @@ that in order to use `insert` mode you must also install a `copy` adapter as
 pacman -S rofi-emoji
 ```
 
-There's also a community-managed AUR package called [`rofi-emoji-git`](https://aur.archlinux.org/packages/rofi-emoji-git).
+There's also a community-managed AUR package called
+[`rofi-emoji-git`](https://aur.archlinux.org/packages/rofi-emoji-git).
 
 ```bash
 paru -S rofi-emoji-git
@@ -211,7 +210,8 @@ xbps-install -S rofi-emoji
 
 ### NixOS or Home Manager
 
-If you are using `home-manager` you should set up this as a plugin to your Rofi install:
+If you are using `home-manager` you should set up this as a plugin to your Rofi
+install:
 
 ```nix
 programs.rofi = {
